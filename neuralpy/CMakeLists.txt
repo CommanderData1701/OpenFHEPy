@@ -18,7 +18,7 @@ include_directories( ${OpenFHE_INCLUDE}/core )
 include_directories( ${OpenFHE_INCLUDE}/pke )
 
 find_package(pybind11 CONFIG)
-find_package(NeuralOFHE REQUIRED)
+# find_package(NeuralOFHE REQUIRED)
 pybind11_add_module(neuralpy MODULE neuralpy.cpp)
 
 target_link_libraries(neuralpy PRIVATE NeuralOFHE)
