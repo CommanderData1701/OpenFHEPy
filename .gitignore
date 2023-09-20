@@ -1,0 +1,8 @@
+.idea
+example_code/keys
+.vscode
+cmake-build-debug
+**/build
+**/dist
+**/venv
+**/__pycache__
