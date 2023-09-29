@@ -13,7 +13,9 @@
 
 class PythonContext {
 public:
-    PythonContext () {}
+    PythonContext () {
+        verbose = false;
+    }
 
     void SetContext(Context cont) {
         this->context = cont;
@@ -235,7 +237,9 @@ public:
             std::cerr << "Error loading context" << std::endl;
             exit(1);
         }
-        std::cout << "Context has been loaded." << std::endl;
+
+        if (Operator::getVerbosity())
+            std::cout << "Context was loaded." << std::endl;
     }
 
     /***
@@ -255,7 +259,9 @@ public:
             std::cerr << "Error loading mult. key." << std::endl;
             exit(1);
         }
-        std::cout << "Deserialized mult. key" << std::endl;
+
+        if (Operator::getVerbosity())
+            std::cout << "Deserialized mult. key" << std::endl;
         multKeyIStream.close();
     }
 
@@ -276,7 +282,9 @@ public:
             std::cerr << "Error loading rot. key." << std::endl;
             exit(1);
         }
-        std::cout << "Deserialized rot. key" << std::endl;
+
+        if (Operator::getVerbosity())
+            std::cout << "Deserialized rot. key" << std::endl;
         rotKeyIStream.close();
     }
 
@@ -290,7 +298,9 @@ public:
             std::cerr << "Error serializing context." << std::endl;
             exit(1);
         }
-        std::cout << "Cryptocontext serialized!" << std::endl;
+
+        if (Operator::getVerbosity())
+            std::cout << "Cryptocontext serialized!" << std::endl;
     }
 
     /***
@@ -305,7 +315,9 @@ public:
                 std::cerr << "Error serializing multiplication key." << std::endl;
                 std::exit(1);
             }
-            std::cout << "Multiplication key serialized!" << std::endl;
+
+            if (Operator::getVerbosity())
+                std::cout << "Multiplication key serialized!" << std::endl;
             multKeyFile.close();
 
         } else {
@@ -320,12 +332,14 @@ public:
      */
     void saveRotKeys(std::string filePath) {
         std::ofstream rotKeyFile(filePath, std::ios::out | std::ios::binary);
-        if (rotKeyFile.is_open()) {
+        if (rotKeyFile.is_open() && verbose) {
             if (!context->SerializeEvalAutomorphismKey(rotKeyFile, SerType::BINARY)) {
                 std::cerr << "Error serializing rotation key." << std::endl;
                 std::exit(1);
             }
-            std::cout << "Rotation key serialized!" << std::endl;
+
+            if (Operator::getVerbosity())
+                std::cout << "Rotation key serialized!" << std::endl;
             rotKeyFile.close();
         } else {
             std::cerr << "Error opening Mult Key file..." << std::endl;
@@ -334,6 +348,7 @@ public:
 
 private:
     Context context;
+    bool verbose;
 };
 
 #endif //NEURALPY_PYTHONCONTEXT_H

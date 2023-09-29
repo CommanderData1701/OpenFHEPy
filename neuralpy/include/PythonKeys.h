@@ -28,7 +28,8 @@ public:
             exit(1);
         }
 
-        std::cout << "Key deserialized from " << filePath << "." << std::endl;
+        if (Operator::getVerbosity())
+            std::cout << "Key deserialized from " << filePath << "." << std::endl;
     }
 
     void save(std::string filePath) {
@@ -36,7 +37,9 @@ public:
             std::cerr << "Error serializing key to " << filePath << "." << std::endl;
             std::exit(1);
         }
-        std::cout << "Key serialized to " << filePath << "." << std::endl;
+
+        if (Operator::getVerbosity())
+            std::cout << "Key serialized to " << filePath << "." << std::endl;
     }
 
 private:

@@ -40,6 +40,20 @@ public:
     static void initialize(CryptoContext<DCRTPoly> cc);
 
     /***
+     * Static method that sets verbosity of application.
+     *
+     * @param state
+     */
+    static void setVerbosity(bool state);
+
+    /***
+     * Getter function for verbosity level of application.
+     *
+     * @return Verbosity level
+     */
+    static bool getVerbosity();
+
+    /***
      * Function that checks whether or not the context variable is pointing to NULL, i.e. not being initialized.
      */
     void isInitialized();
@@ -56,6 +70,11 @@ protected:
      * Static variable pointing to the context object of the application.
      */
     static CryptoContext<DCRTPoly> context;
+
+    /***
+     * Verbosity of application.
+     */
+    static bool verbose;
 
     /***
      * Name variable which can be useful for debugging applications.

@@ -54,5 +54,14 @@ PythonContext GetContext(PythonCiphertext cipher) {
     return pyContext;
 }
 
+/***
+ * Setting verbosity of the application
+ *
+ * @param verbose
+ */
+void SetVerbosity(bool verbose) {
+    Operator::setVerbosity(verbose);
+}
+
 
 #endif //NEURALPY_WRAPPERFUNCTIONS_H

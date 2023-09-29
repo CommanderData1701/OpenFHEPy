@@ -24,8 +24,8 @@ public:
         if (!Serial::DeserializeFromFile(filePath, ciphertext, SerType::BINARY)) {
             std::cerr << "Could not deserialize " + filePath + " ciphertext" << std::endl;
             exit(1);
-        }
-        std::cout << "Ciphertext " + filePath << " deserialized." << std::endl;
+        } else if (Operator::getVerbosity())
+            std::cout << "Ciphertext " + filePath << " deserialized." << std::endl;
     }
 
     /***
@@ -37,8 +37,8 @@ public:
         if(!Serial::SerializeToFile(filePath, ciphertext, SerType::BINARY)) {
             std::cerr << "Error Serializing ciphertext." << std::endl;
             exit(1);
-        }
-        std::cout << "Ciphertext serialized." << std::endl;
+        } else if (Operator::getVerbosity())
+            std::cout << "Ciphertext serialized." << std::endl;
     }
 
     /***

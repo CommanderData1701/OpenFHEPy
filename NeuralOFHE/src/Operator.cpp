@@ -1,5 +1,8 @@
 #include "NeuralOFHE/Operators/Operator.h"
 
+bool Operator::verbose = false;
+
+
 CryptoContext<DCRTPoly> Operator::context = NULL;
 
 
@@ -25,4 +28,14 @@ void Operator::isInitialized() {
 
 std::string Operator::getName() {
     return this->name;
+}
+
+
+void Operator::setVerbosity(bool state) {
+    verbose = state;
+}
+
+
+bool Operator::getVerbosity() {
+    return verbose;
 }
