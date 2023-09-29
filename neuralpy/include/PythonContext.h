@@ -252,7 +252,7 @@ public:
 
         std::ifstream multKeyIStream(filePath, std::ios::in | std::ios::binary);
         if (!multKeyIStream.is_open()) {
-            std::cerr << "Error opening mult. key file." << std::endl;
+            std::cerr << "Error opening mult. key file. at " << filePath << std::endl;
             exit(1);
         }
         if (!context->DeserializeEvalMultKey(multKeyIStream, SerType::BINARY)) {
@@ -275,7 +275,7 @@ public:
 
         std::ifstream rotKeyIStream(filePath, std::ios::in | std::ios::binary);
         if (!rotKeyIStream.is_open()) {
-            std::cerr << "Error opening rot. key file." << std::endl;
+            std::cerr << "Error opening rot. key file at " << filePath << std::endl;
             exit(1);
         }
         if (!context->DeserializeEvalAutomorphismKey(rotKeyIStream, SerType::BINARY)) {
@@ -321,7 +321,7 @@ public:
             multKeyFile.close();
 
         } else {
-            std::cerr << "Error opening Mult Key file..." << std::endl;
+            std::cerr << "Error opening Mult Key file at " << filePath << std::endl;
         }
     }
 
@@ -338,11 +338,12 @@ public:
                 std::exit(1);
             }
 
-            if (Operator::getVerbosity())
+            if (Operator::getVerbosity()) {
                 std::cout << "Rotation key serialized!" << std::endl;
+            }
             rotKeyFile.close();
         } else {
-            std::cerr << "Error opening Mult Key file..." << std::endl;
+            std::cerr << "Error opening Rot. Key file at " << filePath << std::endl;
         }
     }
 
