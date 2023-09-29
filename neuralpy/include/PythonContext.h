@@ -13,9 +13,7 @@
 
 class PythonContext {
 public:
-    PythonContext () {
-        verbose = false;
-    }
+    PythonContext () {}
 
     void SetContext(Context cont) {
         this->context = cont;
@@ -332,7 +330,7 @@ public:
      */
     void saveRotKeys(std::string filePath) {
         std::ofstream rotKeyFile(filePath, std::ios::out | std::ios::binary);
-        if (rotKeyFile.is_open() && verbose) {
+        if (rotKeyFile.is_open()) {
             if (!context->SerializeEvalAutomorphismKey(rotKeyFile, SerType::BINARY)) {
                 std::cerr << "Error serializing rotation key." << std::endl;
                 std::exit(1);
@@ -349,7 +347,6 @@ public:
 
 private:
     Context context;
-    bool verbose;
 };
 
 #endif //NEURALPY_PYTHONCONTEXT_H
