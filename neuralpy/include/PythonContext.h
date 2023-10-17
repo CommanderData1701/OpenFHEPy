@@ -9,6 +9,7 @@
 
 #include "PythonCiphertext.h"
 #include "PythonKeys.h"
+#include "../../NeuralOFHE/src/LinTools.h"
 
 
 class PythonContext {
@@ -133,6 +134,14 @@ public:
     PythonCiphertext EvalMult (double a, PythonCiphertext b) {
         PythonCiphertext result;
         Cipher ciph_result = context->EvalMult(a, b.getCiphertext());
+        result.setCiphertext(ciph_result);
+
+        return result;
+    }
+
+    PythonCiphertext EvalMatMul (matVec matrix, PythonCiphertext vec) {
+        PythonCiphertext result;
+        Cipher ciph_result = matrix_multiplication(matrix, vec.getCiphertext(), context);
         result.setCiphertext(ciph_result);
 
         return result;

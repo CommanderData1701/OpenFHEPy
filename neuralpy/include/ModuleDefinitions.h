@@ -198,7 +198,9 @@ void defineBasicOpenFHEModules (py::module_& m) {
                     "Subtraction of ciphertext b from floating point number a, dependant on the reverse variable.",
                     py::arg("a"),
                     py::arg("b"),
-                    py::arg("reverse")=false);
+                    py::arg("reverse")=false)
+            .def("EvalMatMul", &PythonContext::EvalMatMul, py::arg("matrix"),
+                 py::arg("ciphertext"));
 }
 
 
@@ -223,7 +225,7 @@ void defineNeuralOFHETypes (py::module_& m) {
             .def("__call__", initForward<nn::AveragePool>());
 
     py::class_<nn::BatchNorm, PyImpl<nn::BatchNorm>, Operator>(m, "BatchNorm")
-            .def(py::init<matVec, std::vector<double>>(),
+            .def(py::init<std::vector<double>, std::vector<double>>(),
                     py::arg("weights"), py::arg("biases"))
             .def("__call__", initForward<nn::BatchNorm>());
 
