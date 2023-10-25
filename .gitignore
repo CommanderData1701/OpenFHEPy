@@ -6,3 +6,4 @@ cmake-build-debug
 **/dist
 **/venv
 **/__pycache__
+install

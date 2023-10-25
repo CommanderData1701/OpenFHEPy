@@ -200,7 +200,8 @@ void defineBasicOpenFHEModules (py::module_& m) {
                     py::arg("b"),
                     py::arg("reverse")=false)
             .def("EvalMatMul", &PythonContext::EvalMatMul, py::arg("matrix"),
-                 py::arg("ciphertext"));
+                 py::arg("ciphertext"),
+                 py::arg("parallel") = true);
 }
 
 

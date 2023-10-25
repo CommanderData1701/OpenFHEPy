@@ -4,6 +4,11 @@ from os import listdir
 from random import choice 
 import matplotlib.pyplot as plt
 from time import time
+import json
+
+
+def plain_relu(x: np.array) -> np.array:
+    return np.maximum(0, x)
 
 
 def main() -> None:
@@ -39,13 +44,17 @@ def main() -> None:
     x.setSlots(initial_size)
     print("Encrypted ciphertext with {} slots".format(x.getSlots()))
 
+    conv_weights, conv_biases = np.load("model/_Conv_0_weights.npy"), np.load("model/_Conv_0_bias.npy")
+    gemm0_weights, gemm0_biases = np.load("model/_Gemm_3_w.npy"), np.load("model/_Gemm_3_bias.npy")
+    gemm1_weights, gemm1_biases = np.load("model/_Gemm_5_w.npy"), np.load("model/_Gemm_5_bias.npy")
+
     # Define operations
     operations = [
-        neuralpy.Conv2D(np.load("model/_Conv_0_weights.npy"), np.load("model/_Conv_0_bias.npy")),
+        neuralpy.Conv2D(conv_weights, conv_biases),
         neuralpy.ReLU(-6.5318193435668945, 8.548895835876465, 3),
-        neuralpy.Gemm(np.load("model/_Gemm_3_w.npy"), np.load("model/_Gemm_3_bias.npy")),
+        neuralpy.Gemm(gemm0_weights, gemm0_biases),
         neuralpy.ReLU(-14.685586750507355, 12.968225657939911, 3),
-        neuralpy.Gemm(np.load("model/_Gemm_5_w.npy"), np.load("model/_Gemm_5_bias.npy")),
+        neuralpy.Gemm(gemm1_weights, gemm1_biases),
     ]
 
     total_time = 0
@@ -70,7 +79,14 @@ def main() -> None:
     result.SetLength(output_size)
     result = result.GetPackedValue()
 
-    print(result)
+    plain_output = np.array(image) @ conv_weights + conv_biases
+    plain_output = plain_relu(plain_output)
+    plain_output = plain_output @ gemm0_weights + gemm0_biases
+    plain_output = plain_relu(plain_output)
+    plain_output = plain_output @ gemm1_weights + gemm1_biases
+
+    print(f"Cipher output: {result}")
+    print(f"Plain output: {plain_output}")
     print("Model predicted integer to be a {} and took {}s".format(result.index(max(result)), total_time))
 
     plt.imshow(copy, cmap="gray")

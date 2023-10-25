@@ -14,12 +14,25 @@
 
 class PythonContext {
 public:
+    /***
+     * Standard constructor that does nothing.
+    */
     PythonContext () {}
 
+    /***
+     * Setter function to set the wrapped underlying OpenFHE context object
+     * 
+     * @param cont pointer to 
+    */
     void SetContext(Context cont) {
         this->context = cont;
     }
 
+    /***
+     * Method to enable FHE features of the circuit
+     * 
+     * @param feature Corresponding enum to the feature
+    */
     void Enable(PKESchemeFeature feature) {
         context->Enable(feature);
     }
@@ -33,6 +46,12 @@ public:
         context->EvalMultKeyGen(privateKey.getKey());
     }
 
+    /***
+     * Method to add two chiphertexts
+     * 
+     * @param a first ciphertext
+     * @param b second ciphertext
+     */
     PythonCiphertext EvalAdd (PythonCiphertext a, PythonCiphertext b) {
         PythonCiphertext result;
         Cipher ciph_result = context->EvalAdd(a.getCiphertext(), b.getCiphertext());
@@ -41,6 +60,12 @@ public:
         return result;
     }
 
+    /***
+     * Method to add a plaintext to a ciphertext
+     * 
+     * @param a Plaintext
+     * @param b Ciphertext
+     */
     PythonCiphertext EvalAdd (std::vector<double> a, PythonCiphertext b) {
         PythonCiphertext result;
         Plaintext pl = context->MakeCKKSPackedPlaintext(a);
@@ -50,6 +75,12 @@ public:
         return result;
     }
 
+    /***
+     * Method for adding a constant to a ciphertext
+     * 
+     * @param a Constant 
+     * @param b 
+    */
     PythonCiphertext EvalAdd (double a, PythonCiphertext b) {
         PythonCiphertext result;
         Cipher ciph_result = context->EvalAdd(a, b.getCiphertext());
@@ -139,9 +170,9 @@ public:
         return result;
     }
 
-    PythonCiphertext EvalMatMul (matVec matrix, PythonCiphertext vec) {
+    PythonCiphertext EvalMatMul (matVec matrix, PythonCiphertext vec, bool parallel = true) {
         PythonCiphertext result;
-        Cipher ciph_result = matrix_multiplication(matrix, vec.getCiphertext(), context);
+        Cipher ciph_result = matrix_multiplication(matrix, vec.getCiphertext(), context, parallel);
         result.setCiphertext(ciph_result);
 
         return result;

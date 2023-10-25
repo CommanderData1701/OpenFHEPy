@@ -34,4 +34,4 @@ execute_process(
 message(STATUS "Python site packages directory: ${PYTHON_SITE_PACKAGES}")
 install(TARGETS neuralpy LIBRARY DESTINATION ${PYTHON_SITE_PACKAGES})
 
-file(MAKE_DIRECTORY example_code/keys)
+file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/example_code/keys)
