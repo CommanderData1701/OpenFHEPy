@@ -12,16 +12,34 @@
 template<class T>
 class PythonKey {
 public:
+    /***
+     * Empty constructor that does nothing
+    */
     PythonKey() {}
 
+    /***
+     * Setter method for the underlying OpenFHE key object
+     * 
+     * @param k OpenFHE key object
+    */
     void setKey(T k) {
         this->key = k;
     }
 
+    /***
+     * Getter method for the underlying OpenFHE key object
+     * 
+     * @return key object
+    */
     T getKey() {
         return key;
     }
 
+    /***
+     * Method to load key from storage
+     * 
+     * @param filePath Path to file
+    */
     void load(std::string filePath) {
         if (!Serial::DeserializeFromFile(filePath, key, SerType::BINARY)) {
             std::cerr << "Error deserializing key from " << filePath << "." << std::endl;
@@ -32,6 +50,11 @@ public:
             std::cout << "Key deserialized from " << filePath << "." << std::endl;
     }
 
+    /***
+     * Method to save key to storage
+     * 
+     * @param filePath Path to file
+    */
     void save(std::string filePath) {
         if (!Serial::SerializeToFile(filePath, key, SerType::BINARY)) {
             std::cerr << "Error serializing key to " << filePath << "." << std::endl;

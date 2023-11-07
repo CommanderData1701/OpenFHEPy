@@ -1,7 +1,3 @@
-//
-// Created by lchenke on 10.08.23.
-//
-
 #ifndef NEURALPY_OPENFHEPREREQUISITES_H
 #define NEURALPY_OPENFHEPREREQUISITES_H
 
