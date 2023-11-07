@@ -110,9 +110,7 @@ void defineBasicOpenFHEModules (py::module_& m) {
     py::class_<PythonCiphertext>(m, "Ciphertext")
             .def(py::init<>())
             .def("save", &PythonCiphertext::save, py::arg("filePath"))
-            .def("load", &PythonCiphertext::load, py::arg("filePath"))
-            .def("setSlots", &PythonCiphertext::setSlots, py::arg("slots"))
-            .def("getSlots", &PythonCiphertext::getSlots);
+            .def("load", &PythonCiphertext::load, py::arg("filePath"));
 
     py::class_<PythonPlaintext>(m, "Plaintext")
             .def(py::init<>())

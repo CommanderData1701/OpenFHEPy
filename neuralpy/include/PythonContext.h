@@ -259,12 +259,6 @@ public:
         PythonPlaintext result;
         Plaintext pl;
 
-        uint32_t power = 1;
-        while (power <= cipher.getSlots())
-            power *= 2;
-
-        //  Needs to be set to the next largest power of two, otherwise it won't decrypt
-        cipher.setSlots(power);
         context->Decrypt(privateKey.getKey(), cipher.getCiphertext(), &pl);
 
         result.setPlaintext(pl);

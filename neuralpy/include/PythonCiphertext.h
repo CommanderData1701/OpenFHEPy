@@ -59,24 +59,6 @@ public:
             std::cout << "Ciphertext serialized." << std::endl;
     }
 
-    /***
-     * Method to set the slots of the ciphertext.
-     *
-     * @param slots Number of slots the ciphertext is supposed to have.
-     */
-    void setSlots(uint32_t slots) {
-        ciphertext->SetSlots(slots);
-    }
-
-    /***
-     * Getter Method for the number of slots in the Ciphertext
-     *
-     * @return Number of slots
-     */
-    uint32_t getSlots() {
-        return ciphertext->GetSlots();
-    }
-
 private:
     Cipher ciphertext;
 };
