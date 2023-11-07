@@ -12,6 +12,10 @@
 #include "../../NeuralOFHE/src/LinTools.h"
 
 
+/***
+ *  Class around the CKKS context object. This was written do to issues with 
+ *  large OpenFHE templates.
+*/
 class PythonContext {
 public:
     /***
@@ -51,6 +55,7 @@ public:
      * 
      * @param a first ciphertext
      * @param b second ciphertext
+     * @return a + b
      */
     PythonCiphertext EvalAdd (PythonCiphertext a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -65,6 +70,7 @@ public:
      * 
      * @param a Plaintext
      * @param b Ciphertext
+     * @return a + b
      */
     PythonCiphertext EvalAdd (std::vector<double> a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -79,7 +85,8 @@ public:
      * Method for adding a constant to a ciphertext
      * 
      * @param a Constant 
-     * @param b 
+     * @param b Ciphertext
+     * @return a + b
     */
     PythonCiphertext EvalAdd (double a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -89,6 +96,13 @@ public:
         return result;
     }
 
+    /***
+     * Method to subtract one ciphertext from another
+     * 
+     * @param a first ciphertext
+     * @param b second ciphertext
+     * @return a - b
+    */
     PythonCiphertext EvalSub (PythonCiphertext a, PythonCiphertext b) {
         PythonCiphertext result;
         Cipher ciph_result = context->EvalSub(a.getCiphertext(), b.getCiphertext());
@@ -97,6 +111,15 @@ public:
         return result;
     }
 
+    /***
+     * Method to subtract a ciphertext from a plaintext a. Introduced a third 
+     * parameter in order to do one less overload
+     * 
+     * @param a Plaintext
+     * @param b Ciphertext
+     * @param reverse If set to true, operation will compute the negative
+     * @return a - b if reverse is false, b - a otherwise
+    */
     PythonCiphertext EvalSub (std::vector<double> a, PythonCiphertext b, bool reverse=false) {
         PythonCiphertext result;
         Plaintext pl = context->MakeCKKSPackedPlaintext(a);
@@ -111,6 +134,14 @@ public:
         return result;
     }
 
+    /***
+     * Overload for subtraction of a ciphertext from a constant value.
+     * 
+     * @param a Constant
+     * @param b Ciphertext
+     * @param reverse If set to true it will compute negative of the operation
+     * @return a - b if reverse is false, b - a otherwise
+    */
     PythonCiphertext EvalSub (double a, PythonCiphertext b, bool reverse=false) {
         PythonCiphertext result;
         Cipher ciph_result;
@@ -127,9 +158,9 @@ public:
     /***
      * Overload of ciphertext ciphertext multiplication
      *
-     * @param a
-     * @param b
-     * @return
+     * @param a Ciphertext
+     * @param b Ciphertext
+     * @return a * b
      */
     PythonCiphertext EvalMult (PythonCiphertext a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -142,9 +173,9 @@ public:
     /***
      * Overload of plaintext ciphertext multiplication
      *
-     * @param a
-     * @param b
-     * @return
+     * @param a Plaintext
+     * @param b Ciphertext
+     * @return a * b
      */
     PythonCiphertext EvalMult (std::vector<double> a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -160,7 +191,7 @@ public:
      *
      * @param a
      * @param b
-     * @return
+     * @return a * b
      */
     PythonCiphertext EvalMult (double a, PythonCiphertext b) {
         PythonCiphertext result;
@@ -170,6 +201,13 @@ public:
         return result;
     }
 
+    /***
+     * Method for doing plaintext matrix, ciphertext vector multiplication.
+     * 
+     * @param matrix Plain matrix
+     * @param vec Cipher vector
+     * @return vec . matrix
+    */
     PythonCiphertext EvalMatMul (matVec matrix, PythonCiphertext vec, bool parallel = true) {
         PythonCiphertext result;
         Cipher ciph_result = matrix_multiplication(matrix, vec.getCiphertext(), context, parallel);
@@ -181,7 +219,7 @@ public:
     /***
      * Generate rotation keys required to do matrix multiplication with the contexts batch size.
      *
-     * @param key
+     * @param key Private key of the circuit
      */
     void GenRotations (PythonKey<PrivateKey<DCRTPoly>> key) {
         std::vector<int> rotations = GetRotations(context->GetEncodingParams()->GetBatchSize());
