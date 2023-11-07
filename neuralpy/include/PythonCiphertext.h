@@ -3,14 +3,32 @@
 
 #include "OpenFHEPrerequisites.h"
 
+/***
+ * Python-Ciphertext class which was written due to issues with long templates in
+ * OpenFHE.
+*/
 class PythonCiphertext {
 public:
+    /***
+     * Empty constructor that does nothing, since ciphertext objet should be set 
+     * with setter method.
+    */
     PythonCiphertext () {}
 
+    /***
+     * Setter method for the underlying OpenFHE CKKS ciphertext object
+     * 
+     * @param cipher OpenFHE ciphertext object.
+    */
     void setCiphertext(Cipher cipher) {
         ciphertext = cipher;
     }
 
+    /***
+     * Getter method for the underlying OpenFHE CKKS ciphertext object
+     * 
+     * @return OpenFHE ciphertext
+    */
     Cipher getCiphertext () {
         return ciphertext;
     }
