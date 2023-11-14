@@ -420,11 +420,25 @@ public:
     bool hasRelinKeys() {
         auto KeyMap = this->context->GetAllEvalMultKeys();
 
+        if (Operator::getVerbosity()) {
+            std::cout << "Context has " << KeyMap.size() << " relin keys." << std::endl;
+            std::cout << "Names:" << std::endl;
+            for (const auto& pair : KeyMap)
+                std::cout << "\t" << pair.first << std::endl;
+        }
+
         return KeyMap.size() != 0;
     }
 
     bool hasGaloisKeys() {
         auto KeyMap = this->context->GetAllEvalAutomorphismKeys();
+
+        if (Operator::getVerbosity()) {
+            std::cout << "Context has " << KeyMap.size() << " automorphism keys." << std::endl;
+            std::cout << "Names:" << std::endl;
+            for (const auto& pair : KeyMap)
+                std::cout << "\t" << pair.first << std::endl;
+        }
 
         return KeyMap.size() != 0;
     }
