@@ -16,6 +16,7 @@
 #include <future>
 
 #include "MatrixFormatting.h"
+#include "UnitTestMetadataTestSer.h"
 #include "openfhe.h"
 
 using namespace lbcrypto;
