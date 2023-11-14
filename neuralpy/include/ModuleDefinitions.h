@@ -199,7 +199,9 @@ void defineBasicOpenFHEModules (py::module_& m) {
                     py::arg("reverse")=false)
             .def("EvalMatMul", &PythonContext::EvalMatMul, py::arg("matrix"),
                  py::arg("ciphertext"),
-                 py::arg("parallel") = true);
+                 py::arg("parallel") = true)
+            .def("hasRelinKeys", &PythonContext::hasRelinKeys)
+            .def("hasGaloisKeys", &PythonContext::hasGaloisKeys);
 }
 
 

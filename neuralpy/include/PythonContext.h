@@ -417,6 +417,18 @@ public:
         }
     }
 
+    bool hasRelinKeys() {
+        auto KeyMap = this->context->GetAllEvalMultKeys();
+
+        return KeyMap.size() != 0;
+    }
+
+    bool hasGaloisKeys() {
+        auto KeyMap = this->context->GetAllEvalAutomorphismKeys();
+
+        return KeyMap.size() != 0;
+    }
+
 private:
     Context context;
 };
