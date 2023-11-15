@@ -30,6 +30,7 @@ Ciphertext<DCRTPoly> matrix_multiplication(
            matrix_multiplication_parallel(transpose(matrix), vector, context):
            matrix_multiplication_sequential(transpose(matrix), vector, context);
 
+    //  The following Code is for tracking the size of a ciphertext
     uint32_t output_size = matrix[0].size();
 
     auto size = std::make_shared<MetadataTest>();

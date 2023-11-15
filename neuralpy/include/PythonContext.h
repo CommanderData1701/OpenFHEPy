@@ -245,6 +245,12 @@ public:
     PythonCiphertext Encrypt(PythonPlaintext plaintext, PythonKey<PublicKey<DCRTPoly>> publicKey) {
         PythonCiphertext result;
         result.setCiphertext(context->Encrypt(publicKey.getKey(), plaintext.getPlaintext()));
+
+        auto size = std::make_shared<MetadataTest>();
+        size->SetMetadata(std::to_string(plaintext.GetPackedValue().size()));
+
+        MetadataTest::StoreMetadata<DCRTPoly>(result.getCiphertext(), size);
+
         return result;
     }
 
@@ -260,7 +266,10 @@ public:
         Plaintext pl;
 
         context->Decrypt(privateKey.getKey(), cipher.getCiphertext(), &pl);
+        std::string meta = MetadataTest::GetMetadata<DCRTPoly>(cipher.getCiphertext())->GetMetadata();
+        int size = std::stoi(meta);
 
+        pl->SetLength((unsigned) size);
         result.setPlaintext(pl);
 
         return result;
