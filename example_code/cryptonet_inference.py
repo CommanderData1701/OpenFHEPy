@@ -20,7 +20,6 @@ def main() -> None:
 
     copy = image.copy()
     image = list(image.flat)
-    initial_size = len(image)
 
     # Generate context and keypair object in order to load them from file
     context = neuralpy.Context()
@@ -41,8 +40,6 @@ def main() -> None:
 
     # Encrypt image
     x = context.Encrypt(plain, keypair.publicKey)
-    x.setSlots(initial_size)
-    print("Encrypted ciphertext with {} slots".format(x.getSlots()))
 
     conv_weights, conv_biases = np.load("model/_Conv_0_weights.npy"), np.load("model/_Conv_0_bias.npy")
     gemm0_weights, gemm0_biases = np.load("model/_Gemm_3_w.npy"), np.load("model/_Gemm_3_bias.npy")
@@ -72,12 +69,9 @@ def main() -> None:
         print("Took {}s".format(elapsed))
 
 
-    output_size = x.getSlots()
-
     # Decrypt image
     result = context.Decrypt(x, keypair.privateKey)
-    result.SetLength(output_size)
-    result = result.GetPackedValue()
+    result = np.array(result.GetPackedValue())
 
     plain_output = np.array(image) @ conv_weights + conv_biases
     plain_output = plain_relu(plain_output)
@@ -87,7 +81,7 @@ def main() -> None:
 
     print(f"Cipher output: {result}")
     print(f"Plain output: {plain_output}")
-    print("Model predicted integer to be a {} and took {}s".format(result.index(max(result)), total_time))
+    print("\nEncrypted model predicted integer to be a {} and took {}s. Plain model predicted a {}.".format(np.argmax(result), total_time, np.argmax(plain_output)))
 
     plt.imshow(copy, cmap="gray")
     plt.show()
