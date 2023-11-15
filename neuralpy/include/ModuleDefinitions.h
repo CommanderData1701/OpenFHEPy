@@ -225,11 +225,14 @@ void defineNeuralOFHETypes (py::module_& m) {
             .def(py::init<matVec>())
             .def("__call__", initForward<nn::AveragePool>());
 
+    py::class_<nn::PadOperator, PyImpl<nn::PadOperator>, Operator>(m, "PadOperator")
+            .def(py::init<matVec, std::vector<double>>())
+            .def("__call__", initForward<nn::PadOperator>());
+
     py::class_<nn::BatchNorm, PyImpl<nn::BatchNorm>, Operator>(m, "BatchNorm")
             .def(py::init<std::vector<double>, std::vector<double>>(),
                     py::arg("weights"), py::arg("biases"))
             .def("__call__", initForward<nn::BatchNorm>());
-
 
     py::class_<ActivationFunction, PythonActivation, Operator>(m, "ActivationFunction")
             .def(py::init<double, double, uint32_t, uint32_t&, std::string>());

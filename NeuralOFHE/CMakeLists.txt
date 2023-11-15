@@ -36,6 +36,7 @@ target_sources(${PROJECT_NAME}
         src/SiLU.cpp
         src/Sigmoid.cpp
         src/BootStrapping.cpp
+        src/PadOperator.cpp
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
