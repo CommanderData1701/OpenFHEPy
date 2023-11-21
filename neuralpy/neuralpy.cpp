@@ -16,4 +16,6 @@ PYBIND11_MODULE(neuralpy, m) {
     m.def("MakeContext", &MakeContext, py::arg("parameters"));
     m.def("GetContext", &GetContext, py::arg("ciphertext"));
     m.def("SetVerbosity", &SetVerbosity, py::arg("verbose"));
+    m.def("GetBootstrapDepth", &GetBootStrapDepth, 
+          py::arg("approx_depth"), py::arg("level_budget"), py::arg("secret_key_dist"));
 }

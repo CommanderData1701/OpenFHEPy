@@ -6,6 +6,9 @@ bool Operator::verbose = false;
 CryptoContext<DCRTPoly> Operator::context = NULL;
 
 
+Operator::Operator() {}
+
+
 Operator::Operator(uint32_t& objectCounter, std::string name) {
     Operator::isInitialized();
     this->name = name;

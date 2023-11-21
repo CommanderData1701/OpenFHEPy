@@ -32,6 +32,15 @@ public:
     Cipher getCiphertext () {
         return ciphertext;
     }
+    
+    /***
+     * Get the current level of the cipher text
+     *
+     * @return Current ciphertext level
+     */
+    uint32_t GetLevel () {
+        return ciphertext->GetLevel();
+    }
 
     /***
      * Method that allows a ciphertexts to be serialized from a file.

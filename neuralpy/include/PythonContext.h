@@ -51,6 +51,18 @@ public:
     }
 
     /***
+     * Method to generate Bootstrapping keys
+     *
+     * @param privateKey private key of the circuit
+     */
+    void EvalBootstrapKeyGen (PythonKey<PrivateKey<DCRTPoly>> privateKey) {
+        uint32_t slots = context->GetEncodingParams()->GetBatchSize();
+
+        context->EvalBootstrapSetup(levelBudget, {0, 0}, slots);
+        context->EvalBootstrapKeyGen(privateKey.getKey(), slots);
+    }
+
+    /***
      * Method to add two chiphertexts
      * 
      * @param a first ciphertext
@@ -242,12 +254,16 @@ public:
      * @param publicKey Public key of the application.
      * @return Encrypted ciphertext.
      */
-    PythonCiphertext Encrypt(PythonPlaintext plaintext, PythonKey<PublicKey<DCRTPoly>> publicKey) {
+    PythonCiphertext Encrypt(std::vector<double> plaintext, PythonKey<PublicKey<DCRTPoly>> publicKey) {
+        Plaintext pl = context->MakeCKKSPackedPlaintext(plaintext);
+        uint32_t batchSize = context->GetEncodingParams()->GetBatchSize();
         PythonCiphertext result;
-        result.setCiphertext(context->Encrypt(publicKey.getKey(), plaintext.getPlaintext()));
+        result.setCiphertext(context->Encrypt(publicKey.getKey(), pl));
+        result.getCiphertext()->SetSlots(batchSize);
 
+        auto len = plaintext.size();
         auto size = std::make_shared<MetadataTest>();
-        size->SetMetadata(std::to_string(plaintext.GetPackedValue().size()));
+        size->SetMetadata(std::to_string(len));
 
         MetadataTest::StoreMetadata<DCRTPoly>(result.getCiphertext(), size);
 
@@ -452,8 +468,16 @@ public:
         return KeyMap.size() != 0;
     }
 
+    static void setLevelBudget(std::vector<uint32_t> budget) {
+        levelBudget = budget;
+    }
+
 private:
     Context context;
+
+    static std::vector<uint32_t> levelBudget;
 };
+
+std::vector<uint32_t> PythonContext::levelBudget = {};
 
 #endif //NEURALPY_PYTHONCONTEXT_H

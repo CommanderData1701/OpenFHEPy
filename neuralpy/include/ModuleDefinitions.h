@@ -110,7 +110,8 @@ void defineBasicOpenFHEModules (py::module_& m) {
     py::class_<PythonCiphertext>(m, "Ciphertext")
             .def(py::init<>())
             .def("save", &PythonCiphertext::save, py::arg("filePath"))
-            .def("load", &PythonCiphertext::load, py::arg("filePath"));
+            .def("load", &PythonCiphertext::load, py::arg("filePath"))
+            .def("GetLevel", &PythonCiphertext::GetLevel);
 
     py::class_<PythonPlaintext>(m, "Plaintext")
             .def(py::init<>())
@@ -138,6 +139,8 @@ void defineBasicOpenFHEModules (py::module_& m) {
                  py::arg("ciphertext"),
                  py::arg("privateKey"))
             .def("EvalMultKeyGen", &PythonContext::EvalMultKeyGen,
+                 py::arg("privateKey"))
+            .def("EvalBootstrapKeyGen", &PythonContext::EvalBootstrapKeyGen,
                  py::arg("privateKey"))
             .def("GenRotateKeys", &PythonContext::GenRotations,
                  "Generate rotation keys for doing matrix multiplication with the given batch size.")
@@ -233,6 +236,10 @@ void defineNeuralOFHETypes (py::module_& m) {
             .def(py::init<std::vector<double>, std::vector<double>>(),
                     py::arg("weights"), py::arg("biases"))
             .def("__call__", initForward<nn::BatchNorm>());
+
+    py::class_<BootStrapping, PyImpl<BootStrapping>, Operator>(m, "BootStrappingOperator")
+            .def(py::init<>())
+            .def("__call__", initForward<BootStrapping>());
 
     py::class_<ActivationFunction, PythonActivation, Operator>(m, "ActivationFunction")
             .def(py::init<double, double, uint32_t, uint32_t&, std::string>());

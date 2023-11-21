@@ -15,6 +15,11 @@ using namespace lbcrypto;
 class Operator {
 public:
     /***
+     * Standard Base constructor that does nothing.
+     */
+    Operator();
+
+    /***
      * Base constructor used to set the name of an object according to the object counter and increase that counter by
      * one.
      *

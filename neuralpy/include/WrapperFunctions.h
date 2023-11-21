@@ -63,5 +63,15 @@ void SetVerbosity(bool verbose) {
     Operator::setVerbosity(verbose);
 }
 
+/***
+ * Calculating mulitplication Depth required for bootstrapping
+ *
+ * @param 
+ */
+uint32_t GetBootStrapDepth(uint32_t approxDepth,std::vector<uint32_t> levelBudget, SecretKeyDist secretKeyDist) {
+    PythonContext::setLevelBudget(levelBudget);
+    return FHECKKSRNS::GetBootstrapDepth(approxDepth, levelBudget, secretKeyDist);
+}
+
 
 #endif //NEURALPY_WRAPPERFUNCTIONS_H
