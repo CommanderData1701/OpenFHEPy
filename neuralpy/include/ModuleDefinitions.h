@@ -142,6 +142,8 @@ void defineBasicOpenFHEModules (py::module_& m) {
                  py::arg("privateKey"))
             .def("EvalBootstrapKeyGen", &PythonContext::EvalBootstrapKeyGen,
                  py::arg("privateKey"))
+            .def("EvalBootstrap", &PythonContext::EvalBootstrap,
+                 py::arg("cipher"))
             .def("GenRotateKeys", &PythonContext::GenRotations,
                  "Generate rotation keys for doing matrix multiplication with the given batch size.")
             .def("save", &PythonContext::save,
@@ -236,10 +238,6 @@ void defineNeuralOFHETypes (py::module_& m) {
             .def(py::init<std::vector<double>, std::vector<double>>(),
                     py::arg("weights"), py::arg("biases"))
             .def("__call__", initForward<nn::BatchNorm>());
-
-    py::class_<BootStrapping, PyImpl<BootStrapping>, Operator>(m, "BootStrappingOperator")
-            .def(py::init<>())
-            .def("__call__", initForward<BootStrapping>());
 
     py::class_<ActivationFunction, PythonActivation, Operator>(m, "ActivationFunction")
             .def(py::init<double, double, uint32_t, uint32_t&, std::string>());

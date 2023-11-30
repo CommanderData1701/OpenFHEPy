@@ -229,6 +229,19 @@ public:
     }
 
     /***
+     * Bootstrapping method.
+     *
+     * @param ciphertext
+     * @return bootstrapped ciphertext
+     */
+    PythonCiphertext EvalBootstrap (PythonCiphertext x) {
+        PythonCiphertext result;
+        Ciphertext<DCRTPoly> ciph = context->EvalBootstrap(x.getCiphertext());
+        result.setCiphertext(ciph);
+        return result;
+    }
+
+    /***
      * Generate rotation keys required to do matrix multiplication with the contexts batch size.
      *
      * @param key Private key of the circuit
