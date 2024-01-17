@@ -113,11 +113,6 @@ void defineBasicOpenFHEModules (py::module_& m) {
             .def("load", &PythonCiphertext::load, py::arg("filePath"))
             .def("GetLevel", &PythonCiphertext::GetLevel);
 
-    py::class_<PythonPlaintext>(m, "Plaintext")
-            .def(py::init<>())
-            .def("GetPackedValue", &PythonPlaintext::GetPackedValue)
-            .def("SetLength", &PythonPlaintext::SetLength, py::arg("length"));
-
     py::class_<PythonContext>(m, "Context")
             .def(py::init<>())
             .def("Enable", &PythonContext::Enable,
@@ -131,9 +126,6 @@ void defineBasicOpenFHEModules (py::module_& m) {
                  "Encrypt an OpenFHE plaintext.",
                  py::arg("plaintext"),
                  py::arg("publicKey"))
-            .def("PackPlaintext", &PythonContext::PackPlaintext,
-                 "Pack a Python iterator into an OpenFHE plaintext.",
-                 py::arg("plaintext"))
             .def("Decrypt", &PythonContext::Decrypt,
                  "Decrypt a ciphertext into an OpenFHE plaintext.",
                  py::arg("ciphertext"),

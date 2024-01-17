@@ -87,39 +87,4 @@ private:
 };
 
 
-class PythonPlaintext {
-public:
-    PythonPlaintext () {}
-
-    void setPlaintext(Plaintext plain) {
-        this->pl = plain;
-    }
-
-    Plaintext getPlaintext() {
-        return pl;
-    }
-
-    /***
-     * Setting the size of the plaintext vector.
-     *
-     * @param length
-     */
-    void SetLength (uint32_t length) {
-        pl->SetLength(length);
-    }
-
-    /***
-     * Getting the plaintext value as a C++ iterator. Conversion between C++ iterators and Python iterators is seamless
-     * with Pybind11.
-     *
-     * @return Plain vector
-     */
-    std::vector<double> GetPackedValue () {
-        return pl->GetRealPackedValue();
-    }
-
-private:
-    Plaintext pl;
-};
-
 #endif //NEURALPY_PYTHONKEYS_H

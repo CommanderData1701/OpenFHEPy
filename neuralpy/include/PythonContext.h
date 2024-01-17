@@ -290,8 +290,8 @@ public:
      * @param privateKey Private key of the application.
      * @return Plaintext object resulting from the encryption.
      */
-    PythonPlaintext Decrypt(PythonCiphertext cipher, PythonKey<PrivateKey<DCRTPoly>> privateKey) {
-        PythonPlaintext result;
+    std::vector<double> Decrypt(PythonCiphertext cipher, PythonKey<PrivateKey<DCRTPoly>> privateKey) {
+        std::vector<double> result;
         Plaintext pl;
 
         context->Decrypt(privateKey.getKey(), cipher.getCiphertext(), &pl);
@@ -299,20 +299,8 @@ public:
         int size = std::stoi(meta);
 
         pl->SetLength((unsigned) size);
-        result.setPlaintext(pl);
+        result = pl->GetRealPackedValue();
 
-        return result;
-    }
-
-    /***
-     * Packing a C++ iterator containing doubles into a plaintext object.
-     *
-     * @param plaintext Plaintext in form of a C++ iterator
-     * @return Plaintext object
-     */
-    PythonPlaintext PackPlaintext(std::vector<double> plaintext) {
-        PythonPlaintext result;
-        result.setPlaintext(context->MakeCKKSPackedPlaintext(plaintext));
         return result;
     }
 
