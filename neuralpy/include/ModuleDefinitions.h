@@ -198,7 +198,8 @@ void defineBasicOpenFHEModules (py::module_& m) {
                  py::arg("ciphertext"),
                  py::arg("parallel") = true)
             .def("hasRelinKeys", &PythonContext::hasRelinKeys)
-            .def("hasGaloisKeys", &PythonContext::hasGaloisKeys);
+            .def("hasGaloisKeys", &PythonContext::hasGaloisKeys)
+            .def("getModulus", &PythonContext::getModulus);
 }
 
 

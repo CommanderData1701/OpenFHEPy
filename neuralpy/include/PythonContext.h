@@ -473,6 +473,12 @@ public:
         levelBudget = budget;
     }
 
+    double getModulus() {
+        double result = log2(context->GetModulus().ConvertToDouble());
+
+        return result;
+    }
+
 private:
     Context context;
 
