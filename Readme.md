@@ -1,8 +1,8 @@
 # OpenFHEPy
 
 OpenFHEPy is a library that implements machine learning operators for
-homomorphically encrypted inference. It uses the [OpenFHE](https://github.com/pybind/pybind11) library in order to
-implement these operators in C++ and [Pybind11](https://github.com/openfheorg/openfhe-development) in order to create convinient
+homomorphically encrypted inference. It uses the [OpenFHE](https://github.com/openfheorg/openfhe-development) library in order to
+implement these operators in C++ and [Pybind11](https://github.com/pybind/pybind11) in order to create convinient
 Python wrappers around these.
 
 ## Dependencies
