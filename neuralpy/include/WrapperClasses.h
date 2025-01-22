@@ -7,8 +7,7 @@
  * OpenFHE will not be directly accessed by the Python front end. Furthermore there will only be an empty constructor
  * that does nothing. The interactions between the classes will be handled by C++ and not within the Python application
  *
- * @author Linus Henke
- * Contact: linus.henke@mci.edu
+ * @author Anonymous
  *
  */
 #ifndef NEURALPY_WRAPPERCLASSES_H

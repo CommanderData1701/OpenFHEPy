@@ -3,8 +3,7 @@
  *
  * @brief This file includes definitions that allow usage of all C++ functions needed to operate the python library.
  *
- * @author Linus Henke
- * Contact: linus.henke@mci.edu
+ * @author Anonymous
  *
  */
 

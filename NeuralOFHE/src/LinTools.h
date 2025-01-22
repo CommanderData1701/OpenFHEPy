@@ -4,8 +4,7 @@
  * @brief Includes functions that are necessary for carrying out linear operations on plaintexts in the form C++ vectors
  * and ciphertexts in the for of CKKS OpenFHE Ciphertext objects. Function bodies are defined in src/LinTools.cpp.
  *
- * @author Linus Henke
- * Contact: linus.henke@mci.edu
+ * @author Anonymous
  *
  */
 

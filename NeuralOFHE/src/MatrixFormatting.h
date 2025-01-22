@@ -4,8 +4,7 @@
  * @brief Functions to format plaintext matrices, so that linear operations with ciphertexts can be carried out.
  * Function bodies are defined in src/MatrixFormatting.cpp.
  *
- * @author Linus Henke
- * Contact: linus.henke@mci.edu
+ * @author Anonymous
  *
  */
 
