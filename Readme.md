@@ -22,5 +22,3 @@ make && make install
 ```
 
 It is recommended to do this with an active virtual environment.
-
-## Directory structure
